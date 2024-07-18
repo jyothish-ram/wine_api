@@ -15,6 +15,7 @@ Folders `static/`, `templates` are dependents of file `app_web.py`
 ### Parameters
 
 Identifiable parameters by the yolo model 
+
 `AlcoholPercentage`, `AppellationQualityLevel`, `AppellationRegion`, 
 `Country`, 
 `DistinctLogo`,
@@ -36,7 +37,7 @@ Identifiable parameters by the yolo model
 
 
 ### Info
-> [!NOTE]
+
 > yolo v8s model is used for labelling and bounding box
 > Microsoft TrOCR is used for OCR Text extraction
 
