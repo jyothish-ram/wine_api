@@ -43,12 +43,6 @@ else:
 
 
 
-# # Load models
-# processor = TrOCRProcessor.from_pretrained('processor/trocr-large-printed')
-# model = VisionEncoderDecoderModel.from_pretrained('models/trocr-large-printed').to(device)
-# yolo_model = YOLO('models\wine44epoch_v8s.pt').to(device)
-
-
 print('Ready to Process. Intialization Complete..')
 
 def get_text_from_bounding_boxes(image, boxes, class_names, device):
@@ -112,6 +106,7 @@ def predict():
         'data': texts,
         # 'annotated_image': annotated_image_base64
     })
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
