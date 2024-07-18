@@ -1,4 +1,10 @@
 /venv
-static/uploads/
+
 models/trocr-large-printed
-processor/
+/processor/
+/processor/*
+!.gitkeep
+
+/static/uploads/
+/static/uploads/*
+!.gitkeep

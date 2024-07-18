@@ -6,6 +6,7 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 import base64
+import os
 from io import BytesIO
 
 # Initialize the Flask app
