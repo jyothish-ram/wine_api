@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Wine Label Recognition Result</title>
+    <style>
+        .annotated-image {
+            max-width: 80%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Extracted Texts</h1>
+    <ul>
+        {% for text in texts %}
+        <li>{{ text }}</li>
+        {% endfor %}
+    </ul>
+    <h1>Annotated Image</h1>
+    <img class="annotated-image" src="{{ url_for('uploaded_file', filename=annotated_image_filename) }}" alt="Annotated Image">
+    <br><br>
+    <a href="{{ url_for('upload_file') }}">Upload Another Image</a>
+</body>
+</html>
+ 
