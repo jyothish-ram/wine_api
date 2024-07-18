@@ -16,28 +16,31 @@ Folders `static/`, `templates` are dependents of file `app_web.py`
 
 Identifiable parameters by the yolo model 
 
-`AlcoholPercentage`, `AppellationQualityLevel`, `AppellationRegion`, 
+`AlcoholPercentage`, 
+`AppellationQualityLevel`, 
+`AppellationRegion`, 
 `Country`, 
-`DistinctLogo`,
- `EstablishedYear`, 
- `MakerName`, 
- `VintageYear`, 
- `WineType`, 
- `Sweetness`, 
- `Organic`, 
- `Sustainable`
+`DistinctLogo`, 
+`EstablishedYear`, 
+`MakerName`, 
+`VintageYear`, 
+`WineType`, 
+`Sweetness`, 
+`Organic`, 
+`Sustainable`
 
 ## Installation
 
 > [!NOTE]
 > - `python3 -m venv venv` to create python virtual env
 > - `./venv/scripts/activate` to activate venv in windows or `source/bin/activate` in linux
-> - `run pip install -r requirements.txt` to install necessary packages
+> - `run pip install -r req.txt` to install necessary packages
 > - To run the program `python app.py`
 
 
 ### Info
 
+> [!NOTE]
 > - yolo v8s model is used for labelling and bounding box
 > - Microsoft TrOCR is used for OCR Text extraction
 
