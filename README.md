@@ -33,8 +33,8 @@ Identifiable parameters by the yolo model
 
 > [!NOTE]
 > - `python3 -m venv venv` to create python virtual env
-> - `./venv/scripts/activate` to activate venv in windows or `source/bin/activate` in linux
-> - `run pip install -r req.txt` to install necessary packages
+> - `./venv/scripts/activate` to activate venv in windows or `source venv/bin/activate` in linux
+> - `run pip install -r requirements.txt` to install necessary packages
 > - To run the program `python app.py`
 
 

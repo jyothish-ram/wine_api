@@ -1,10 +1,13 @@
-/venv
+# Ignore the venv directory
+/venv/
 
-models/trocr-large-printed
-/processor/
-/processor/*
-!.gitkeep
+# Ignore the trocr-large-printed model directory
+/models/trocr-large-printed/
 
-/static/uploads/
+# Ignore everything under processor/trocr-large-printed but keep .gitkeep
+/processor/trocr-large-printed/*
+!.processor/trocr-large-printed/.gitkeep
+
+# Ignore everything under static/uploads but keep .gitkeep
 /static/uploads/*
-!.gitkeep
+!.static/uploads/.gitkeep

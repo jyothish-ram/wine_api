@@ -20,26 +20,33 @@ print('using '+ device)
 
 
 # Define local paths for saving models
-processor_path = 'processor/trocr-large-printed'
-model_path = 'models/trocr-large-printed'
+# processor_path = 'processor/trocr-large-printed'
+# preprocessor_file_path = os.path.join(processor_path, 'preprocessor_config.json')
+# model_path = 'models/trocr-large-printed'
 
-# Check if the processor is already downloaded
-if not os.path.exists(processor_path):
-    print(f"Downloading and saving processor to {processor_path}")
-    processor = TrOCRProcessor.from_pretrained('microsoft/trocr-large-printed')
-    processor.save_pretrained(processor_path)
-else:
-    print(f"Loading processor from {processor_path}")
-    processor = TrOCRProcessor.from_pretrained(processor_path)
 
-# Check if the model is already downloaded
-if not os.path.exists(model_path):
-    print(f"Downloading and saving model to {model_path}")
-    model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-large-printed')
-    model.save_pretrained(model_path)
-else:
-    print(f"Loading model from {model_path}")
-    model = VisionEncoderDecoderModel.from_pretrained(model_path).to(device)
+# # Check if the processor is already downloaded
+# if not os.path.isfile(processor_path/trocr-large-printed/preprocessor_config.json):
+#     print(f"Downloading and saving processor to {processor_path}")
+#     processor = TrOCRProcessor.from_pretrained('microsoft/trocr-large-printed')
+#     processor.save_pretrained(processor_path)
+# else:
+#     print(f"Loading processor from {processor_path}")
+#     processor = TrOCRProcessor.from_pretrained(processor_path)
+
+# # Check if the model is already downloaded
+# if not os.path.exists(model_path):
+#     print(f"Downloading and saving model to {model_path}")
+#     model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-large-printed')
+#     model.save_pretrained(model_path)
+# else:
+#     print(f"Loading model from {model_path}")
+#     model = VisionEncoderDecoderModel.from_pretrained(model_path).to(device)
+
+
+yolo_model = YOLO('models\wine44epoch_v8s.pt').to(device)
+processor = TrOCRProcessor.from_pretrained('microsoft/trocr-large-printed')
+model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-large-printed').to(device)
 
 
 
