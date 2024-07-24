@@ -3,7 +3,7 @@
 
 
 from flask import Flask, request, jsonify, render_template, send_from_directory
-from transformers import TrOCRProcessor, VisionEncoderDecoderModel
+from transformers import TrOCRProcessor, VisionEncoderDecoderModel, TRANSFORMERS_CACHE
 import cv2
 import pytesseract
 import numpy as np
@@ -43,9 +43,13 @@ print('using '+ device)
 #     print(f"Loading model from {model_path}")
 #     model = VisionEncoderDecoderModel.from_pretrained(model_path).to(device)
 
+
+
 yolo_model = YOLO('models\wine44epoch_v8s.pt').to(device)
 processor = TrOCRProcessor.from_pretrained('microsoft/trocr-large-printed')
 model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-large-printed').to(device)
+print('path for model & processor' + TRANSFORMERS_CACHE)
+
 
 
 print('Ready to Process. Intialization Complete..')

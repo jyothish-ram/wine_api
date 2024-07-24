@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from transformers import TrOCRProcessor, VisionEncoderDecoderModel
+from transformers import TrOCRProcessor, VisionEncoderDecoderModel, TRANSFORMERS_CACHE
 from PIL import Image
 import torch
 import cv2
@@ -7,26 +7,21 @@ import numpy as np
 from ultralytics import YOLO
 import base64
 import os
-from io import BytesIO
 
 # Initialize the Flask app
 app = Flask(__name__)
 print('Server Started')
 
-
 # Check for GPU availability
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-print('using '+ device)
+print('Using ' + device)
 
-
-# Define local paths for saving models
+# # Define local paths for saving models
 # processor_path = 'processor/trocr-large-printed'
-# preprocessor_file_path = os.path.join(processor_path, 'preprocessor_config.json')
 # model_path = 'models/trocr-large-printed'
 
-
 # # Check if the processor is already downloaded
-# if not os.path.isfile(processor_path/trocr-large-printed/preprocessor_config.json):
+# if not os.path.exists(processor_path):
 #     print(f"Downloading and saving processor to {processor_path}")
 #     processor = TrOCRProcessor.from_pretrained('microsoft/trocr-large-printed')
 #     processor.save_pretrained(processor_path)
@@ -44,20 +39,20 @@ print('using '+ device)
 #     model = VisionEncoderDecoderModel.from_pretrained(model_path).to(device)
 
 
+
 yolo_model = YOLO('models\wine44epoch_v8s.pt').to(device)
 processor = TrOCRProcessor.from_pretrained('microsoft/trocr-large-printed')
 model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-large-printed').to(device)
+print('path for model & processor' + TRANSFORMERS_CACHE)
 
-
-
-print('Ready to Process. Intialization Complete..')
+print('Ready to Process. Initialization Complete..')
 
 def get_text_from_bounding_boxes(image, boxes, class_names, device):
     texts = []
     
     for box, class_name in zip(boxes, class_names):
         x1, y1, x2, y2 = map(int, box)
-        roi = image[y1:y2, x1:x2] # roi is the cropped image for the labelled area
+        roi = image[y1:y2, x1:x2]  # ROI is the cropped image for the labeled area
 
         # Convert processed ROI to a PIL image
         pil_image = Image.fromarray(roi)
@@ -67,12 +62,12 @@ def get_text_from_bounding_boxes(image, boxes, class_names, device):
         generated_ids = model.generate(pixel_values)
         text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
-        label = f"{class_name}: {text.strip()}"
+        label = {class_name: text.strip()}
         texts.append(label)
         
-        # Draw bounding box and label on the image(only if we want annotated image)
+        # Draw bounding box and label on the image (only if we want annotated image)
         cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        cv2.putText(image, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        cv2.putText(image, f'{class_name}: {text.strip()}', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
     return texts, image
 
@@ -108,12 +103,16 @@ def predict():
     _, buffer = cv2.imencode('.jpg', annotated_image)
     annotated_image_base64 = base64.b64encode(buffer).decode('utf-8')
 
+    # Combine texts into a single dictionary
+    combined_texts = {}
+    for text in texts:
+        combined_texts.update(text)
+
     # Return the results
     return jsonify({
-        'data': texts,
-        # 'annotated_image': annotated_image_base64
+        'data': combined_texts,
+        'annotated_image': annotated_image_base64
     })
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
