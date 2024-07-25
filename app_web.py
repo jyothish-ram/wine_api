@@ -45,7 +45,7 @@ print('using '+ device)
 
 
 
-yolo_model = YOLO('models\wine44epoch_v8s.pt').to(device)
+yolo_model = YOLO('models/wine44epoch_v8s.pt').to(device)
 processor = TrOCRProcessor.from_pretrained('microsoft/trocr-large-printed')
 model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-large-printed').to(device)
 print('path for model & processor' + TRANSFORMERS_CACHE)
